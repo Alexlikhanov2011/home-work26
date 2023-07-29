@@ -17,7 +17,7 @@ public class EmloyeeService {
         if (employees.size() == SIZE) {
             throw new EmployeeStorageIsFullException();
         }
-        var key = makeKey(lastName,firstName);
+        var key = makeKey(lastName, firstName);
         if (employees.containsKey(key)) {
             throw new EmployeeAllreadyAddedException();
         }
@@ -26,17 +26,17 @@ public class EmloyeeService {
     }
 
     public Employee findEmployee(String lastName, String firstName) {
-      var emp = employees.get(makeKey(lastName,firstName));
-      if (emp == null){
-          throw new EmployeeNotFoundException();
-      }
-      return emp;
+        var emp = employees.get(makeKey(lastName, firstName));
+        if (emp == null) {
+            throw new EmployeeNotFoundException();
+        }
+        return emp;
     }
 
     public boolean removeEmployee(String lastName, String firstName) {
-        Employee removed = employees.remove(makeKey(lastName,firstName));
+        Employee removed = employees.remove(makeKey(lastName, firstName));
         var employee = new Employee(lastName, firstName);
-        if (removed == null){
+        if (removed == null) {
             throw new EmployeeNotFoundException();
         }
         return true;
@@ -45,7 +45,8 @@ public class EmloyeeService {
     public Collection<Employee> getAll() {
         return employees.values();
     }
-    private String makeKey(String lastName, String firstName){
+
+    private String makeKey(String lastName, String firstName) {
         return (lastName + "_" + firstName).toLowerCase();
     }
 }
