@@ -5,8 +5,8 @@ import org.springframework.stereotype.Service;
 import java.util.Objects;
 
 public class Employee {
-    public String firstName;
-    public String lastName;
+    private String firstName;
+    private String lastName;
     private double salary;
     private int departament;
 
