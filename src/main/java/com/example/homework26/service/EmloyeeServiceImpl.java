@@ -4,9 +4,12 @@ import com.example.homework26.exception.EmployeeAllreadyAddedException;
 import com.example.homework26.exception.EmployeeNotFoundException;
 import com.example.homework26.exception.EmployeeStorageIsFullException;
 import com.example.homework26.model.Employee;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
+
+import static org.apache.commons.lang3.StringUtils.capitalize;
 
 @Service
 public class EmloyeeServiceImpl implements EmloyeeService {
@@ -22,8 +25,7 @@ public class EmloyeeServiceImpl implements EmloyeeService {
         if (employees.containsKey(key)) {
             throw new EmployeeAllreadyAddedException();
         }
-        var employee = new Employee(lastName, firstName);
-        employees.put(key, employee);
+        employees.put(key, new Employee(capitalize(firstName), lastName));
     }
 
     @Override
