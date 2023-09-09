@@ -4,47 +4,48 @@ import com.example.homework26.exception.EmployeeNotFoundException;
 import com.example.homework26.model.Employee;
 import org.springframework.stereotype.Service;
 
-import java.awt.*;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
 @Service
-public class departamentService {
-    private final EmloyeeService emloyeeService;
+public class DepartamentServiceImpl implements DepartamentService {
+    private final EmloyeeServiceImpl emloyeeServiceImpl;
 
-    public departamentService(EmloyeeService emloyeeService) {
-        this.emloyeeService = emloyeeService;
+    private DepartamentServiceImpl(EmloyeeServiceImpl emloyeeServiceImpl) {
+        this.emloyeeServiceImpl = emloyeeServiceImpl;
     }
 
-    public double maxSalary(int deptId) {
-        return emloyeeService.getAll()
+    @Override
+    public Employee maxSalary(int deptId) {
+        return emloyeeServiceImpl.getAll()
                 .stream()
                 .filter(e -> e.getDepartament() == deptId)
-                .map(Employee::getSalary)
-                .max(Comparator.comparingDouble(o -> o))
+                .max(Comparator.comparingDouble(e -> e.getSalary()))
                 .orElseThrow(EmployeeNotFoundException::new);
     }
 
-    public double minSalary(int deptId) {
-        return emloyeeService.getAll()
+    @Override
+    public Employee minSalary(int deptId) {
+        return emloyeeServiceImpl.getAll()
                 .stream()
                 .filter(e -> e.getDepartament() == deptId)
-                .map(Employee::getSalary)
-                .min(Comparator.comparingDouble(o -> o))
+                .min(Comparator.comparingDouble(e -> e.getSalary()))
                 .orElseThrow(EmployeeNotFoundException::new);
     }
 
+    @Override
     public List<Employee> findAllByDept(int deptId) {
-        return emloyeeService.getAll()
+        return emloyeeServiceImpl.getAll()
                 .stream()
                 .filter(e -> e.getDepartament() == deptId)
                 .collect(Collectors.toList());
     }
 
+    @Override
     public Map<Integer, List<Employee>> groopByDept() {
-        return emloyeeService.getAll()
+        return emloyeeServiceImpl.getAll()
                 .stream()
                 .collect(Collectors.groupingBy(Employee::getDepartament));
     }
